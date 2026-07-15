@@ -326,17 +326,23 @@ body::after {
     font-family: var(--font-display);
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 0.8rem;
+    letter-spacing: 0.13em;
+    font-size: 0.78rem;
     color: var(--ink);
+    background: transparent;
     text-decoration: none;
-    padding: 0.8rem 2.15rem;
+    padding: 0.8rem 1.9rem;
     border: 1px solid var(--hair-strong);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    white-space: nowrap;
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .contact-btn:hover,
-.contact-btn:focus-visible {
+.contact-btn:focus-visible,
+.contact-btn.is-copied {
     background: var(--ink);
     color: var(--bg);
     border-color: var(--ink);
@@ -370,6 +376,31 @@ body::after {
     font-weight: 600;
 }
 
+/* Discreet maker's credit — muted at rest, a whisper of ApexForge green on hover */
+.credit {
+    margin-top: 1.5rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+}
+
+.credit a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.credit a:hover,
+.credit a:focus-visible {
+    color: var(--ink-soft);
+    outline: none;
+}
+
+.credit a:hover .credit-name,
+.credit a:focus-visible .credit-name {
+    color: #00ffa3;
+}
+
 /* ------------------------------------------------------------------ Responsive */
 @media (max-width: 480px) {
     .masthead-rule {
@@ -385,6 +416,11 @@ body::after {
     }
     .link-arrow {
         font-size: 1.3rem;
+    }
+    .contact-btn {
+        padding: 0.75rem 1.4rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
     }
 }
 

@@ -1,30 +1,31 @@
 /* =====================================================================
    Prima Repubblica — Landing Page
-   Aesthetic: refined, editorial, print-authentic. Ivory paper,
-   Bodoni masthead, EB Garamond text, a whisper of grain. No clutter.
+   Aesthetic: stark editorial monochrome. Warm off-white on near-black,
+   classical Roman capitals (Cinzel), EB Garamond text, film-grain.
+   "Contro il logorio della politica moderna."
    ===================================================================== */
 
 :root {
-    /* Paper & ink */
-    --paper:        #f4f0e6;   /* warm ivory newsprint            */
-    --paper-tint:   #efe9db;   /* faint recess                    */
-    --ink:          #1c1a15;   /* warm near-black                 */
-    --ink-soft:     #46413a;   /* softened ink for secondary text */
-    --muted:        #6f685a;   /* captions, meta                  */
+    /* Ink & ground (inverted: light type on a near-black ground) */
+    --bg:        #0b0a08;   /* warm near-black                    */
+    --ink:       #f3eee3;   /* warm off-white — primary type      */
+    --ink-soft:  #d0c8b8;   /* softened secondary type            */
+    --muted:     #8c8577;   /* labels, captions, meta             */
 
-    /* Accents */
-    --accent:       #7c2b21;   /* oxblood — the single accent     */
-    --accent-warm:  #98362a;
-    --tri-green:    #1c5a3a;
-    --tri-red:      #8a2b22;
-    --tri-white:    #faf6ec;
+    /* Emphasis (kept monochrome to match the B&W brand) */
+    --accent:    #ffffff;   /* pure white — hover emphasis only    */
+
+    /* The single note of colour: the flag */
+    --tri-green: #1f7a4d;
+    --tri-white: #f3eee3;
+    --tri-red:   #b23b2f;
 
     /* Hairlines */
-    --hair:         rgba(28, 26, 21, 0.16);
-    --hair-strong:  rgba(28, 26, 21, 0.45);
+    --hair:         rgba(243, 238, 227, 0.15);
+    --hair-strong:  rgba(243, 238, 227, 0.42);
 
     /* Type */
-    --font-display: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, 'Times New Roman', serif;
+    --font-display: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
     --font-serif:   'EB Garamond', Georgia, 'Times New Roman', serif;
 }
 
@@ -43,7 +44,7 @@ html {
 
 body {
     min-height: 100dvh;
-    background-color: var(--paper);
+    background-color: var(--bg);
     color: var(--ink);
     font-family: var(--font-serif);
     font-size: 18px;
@@ -54,19 +55,32 @@ body {
 }
 
 ::selection {
-    background: var(--accent);
-    color: var(--paper);
+    background: var(--ink);
+    color: var(--bg);
 }
 
-/* Paper grain + vignette overlays (self-contained, non-interactive) */
+/* Accessibility helper — visible to screen readers only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Film grain + a soft crown of light for depth (self-contained overlays) */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: multiply;
+    opacity: 0.06;
+    mix-blend-mode: screen;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -76,7 +90,7 @@ body::after {
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: radial-gradient(125% 100% at 50% 0%, transparent 55%, rgba(28, 26, 21, 0.06) 100%);
+    background: radial-gradient(90% 55% at 50% -8%, rgba(255, 255, 255, 0.055), transparent 68%);
 }
 
 /* ------------------------------------------------------------------ Skip link */
@@ -91,7 +105,7 @@ body::after {
     left: 1rem;
     top: 1rem;
     background: var(--ink);
-    color: var(--paper);
+    color: var(--bg);
     padding: 0.6rem 1rem;
     font-family: var(--font-serif);
     letter-spacing: 0.05em;
@@ -116,25 +130,25 @@ body::after {
     text-align: center;
 }
 
-.eyebrow {
-    font-family: var(--font-serif);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.72rem;
-    color: var(--accent);
-    margin-bottom: 1.15rem;
-    padding-left: 0.3em; /* optically re-centre trailing letter-spacing */
-}
-
 .wordmark {
     font-family: var(--font-display);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: clamp(2.9rem, 12.5vw, 5.25rem);
-    line-height: 0.97;
-    letter-spacing: -0.012em;
-    text-wrap: balance;
+    font-weight: 700;
+    font-size: clamp(2.35rem, 10.5vw, 4.6rem);
+    line-height: 1.06;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+
+.payoff {
+    margin-top: 1.25rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(0.7rem, 2.3vw, 0.9rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-left: 0.22em; /* offset trailing letter-spacing */
 }
 
 .masthead-rule {
@@ -142,7 +156,7 @@ body::after {
     align-items: center;
     justify-content: center;
     gap: 1.25rem;
-    margin-top: 1.6rem;
+    margin-top: 1.7rem;
     padding: 0.55rem 0;
     border-top: 1px solid var(--hair-strong);
     border-bottom: 1px solid var(--hair-strong);
@@ -162,7 +176,7 @@ body::after {
     max-width: 30rem;
     margin: 1.65rem auto 0;
     font-style: italic;
-    font-size: clamp(1.08rem, 3.4vw, 1.32rem);
+    font-size: clamp(1.05rem, 3.3vw, 1.28rem);
     line-height: 1.5;
     color: var(--ink-soft);
     text-wrap: balance;
@@ -182,7 +196,7 @@ body::after {
 }
 
 .tri-green { background: var(--tri-green); }
-.tri-white { background: var(--tri-white); box-shadow: inset 0 0 0 1px var(--hair); }
+.tri-white { background: var(--tri-white); }
 .tri-red   { background: var(--tri-red); }
 
 /* ------------------------------------------------------------------ Links */
@@ -206,13 +220,13 @@ body::after {
 
 .link:hover,
 .link:focus-visible {
-    background-color: rgba(28, 26, 21, 0.04);
+    background-color: rgba(243, 238, 227, 0.05);
     box-shadow: inset 3px 0 0 var(--accent);
     outline: none;
 }
 
 .link:focus-visible {
-    box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px rgba(124, 43, 33, 0.35);
+    box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px rgba(243, 238, 227, 0.4);
 }
 
 .link-text {
@@ -228,16 +242,16 @@ body::after {
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-size: 0.68rem;
-    color: var(--accent);
+    color: var(--muted);
 }
 
 .link-title {
-    font-family: var(--font-display);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: clamp(1.35rem, 5.5vw, 1.7rem);
-    line-height: 1.12;
-    letter-spacing: -0.005em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 5.5vw, 1.72rem);
+    line-height: 1.15;
+    letter-spacing: 0.005em;
+    color: var(--ink);
     transition: color 0.2s ease;
 }
 
@@ -267,10 +281,10 @@ body::after {
     color: var(--accent);
 }
 
-/* ------------------------------------------------------------------ Colophon */
+/* ------------------------------------------------------------------ Colophon + official seal */
 .colophon {
     margin-top: auto;
-    padding-top: clamp(2.5rem, 8vw, 4rem);
+    padding-top: clamp(2.75rem, 8vw, 4.25rem);
     text-align: center;
     font-family: var(--font-serif);
     font-size: 0.78rem;
@@ -279,12 +293,76 @@ body::after {
     color: var(--muted);
 }
 
-.colophon-mark {
+/* The emblem, stamped like an official ink seal at the foot of the bulletin. */
+.seal {
     display: block;
-    color: var(--accent);
+    width: clamp(88px, 23vw, 120px);
+    height: auto;
+    margin: 0 auto clamp(1.9rem, 5.5vw, 2.6rem);
+    opacity: 0.92;
+    transform: rotate(-4deg);
+    transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.3s ease;
+}
+
+/* Get in touch — Segreteria di Redazione */
+.contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto clamp(2.25rem, 6vw, 3rem);
+}
+
+.contact-kicker {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.68rem;
+    color: var(--muted);
+}
+
+.contact-btn {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
     font-size: 0.8rem;
-    margin-bottom: 0.9rem;
-    opacity: 0.85;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.8rem 2.15rem;
+    border: 1px solid var(--hair-strong);
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.contact-btn:hover,
+.contact-btn:focus-visible {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+    outline: none;
+}
+
+.contact-email {
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-email:hover,
+.contact-email:focus-visible {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.colophon:hover .seal,
+.seal:hover {
+    transform: rotate(0deg);
+    opacity: 1;
 }
 
 .colophon strong {

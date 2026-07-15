@@ -172,11 +172,11 @@ body::after {
 
 .wordmark {
     font-family: var(--font-display);
-    /* Client sample: high-contrast Didone masthead (Bodoni/Didot family) */
-    font-weight: 400;
+    /* Didone masthead — heavier weight + lower opsz so hairlines (A/V/M) stay visible on screen */
+    font-weight: 700;
     font-optical-sizing: auto;
-    /* Max optical size = thinnest hairlines + thickest stems, like the sample */
-    font-variation-settings: "opsz" 96;
+    /* Smaller optical size = sturdier thins (opsz 96 was dissolving diagonals on mobile) */
+    font-variation-settings: "opsz" 14;
     /* Single-line brand lockup: scale to column, never wrap */
     font-size: clamp(1.25rem, 8.6cqi, 2.85rem);
     line-height: 0.98;
@@ -184,6 +184,9 @@ body::after {
     text-transform: uppercase;
     white-space: nowrap;
     color: var(--ink);
+    /* Tiny stroke reinforces hairlines without looking outlined */
+    -webkit-text-stroke: 0.35px currentColor;
+    paint-order: stroke fill;
 }
 
 /* Fallback when container query units are unavailable */

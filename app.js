@@ -97,12 +97,12 @@ async function copyText(text) {
 const EDITION_KEY = "pr-edizione";
 const EDITIONS = {
     sera: {
-        name: "Edizione Sera",
+        name: "Ed. Sera",
         nextLabel: "Passa all'edizione del mattino",
         pressed: true, // "evening mode" as the dark/on state for aria-pressed
     },
     mattina: {
-        name: "Edizione Mattina",
+        name: "Ed. Mattina",
         nextLabel: "Passa all'edizione della sera",
         pressed: false,
     },

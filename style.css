@@ -1,32 +1,67 @@
 /* =====================================================================
    Prima Repubblica — Landing Page
-   Aesthetic: stark editorial monochrome. Warm off-white on near-black,
-   classical Roman capitals (Cinzel), EB Garamond text, film-grain.
+   Aesthetic: stark editorial monochrome. Edizione Sera (off-white on near-black)
+   and Edizione Mattina (ink on newsprint). Cinzel + EB Garamond, film-grain.
    "Contro il logorio della politica moderna."
    ===================================================================== */
 
-:root {
-    /* Ink & ground (inverted: light type on a near-black ground) */
-    --bg:        #0b0a08;   /* warm near-black                    */
-    --ink:       #f3eee3;   /* warm off-white — primary type      */
-    --ink-soft:  #d0c8b8;   /* softened secondary type            */
-    --muted:     #8c8577;   /* labels, captions, meta             */
+/* Edition tokens — Sera (default): warm off-white on near-black.
+   Mattina: newsprint ground, ink type. Toggle via [data-edition]. */
+:root,
+html[data-edition="sera"] {
+    --bg:        #0b0a08;
+    --ink:       #f3eee3;
+    --ink-soft:  #d0c8b8;
+    --muted:     #8c8577;
+    --accent:    #ffffff;
 
-    /* Emphasis (kept monochrome to match the B&W brand) */
-    --accent:    #ffffff;   /* pure white — hover emphasis only    */
-
-    /* The single note of colour: the flag */
     --tri-green: #1f7a4d;
     --tri-white: #f3eee3;
     --tri-red:   #b23b2f;
+    --tri-white-edge: transparent;
 
-    /* Hairlines */
     --hair:         rgba(243, 238, 227, 0.15);
     --hair-strong:  rgba(243, 238, 227, 0.42);
+    --hover-wash:   rgba(243, 238, 227, 0.05);
+    --focus-ring:   rgba(243, 238, 227, 0.4);
 
-    /* Type */
+    --grain-opacity: 0.06;
+    --grain-blend:   screen;
+    --crown: radial-gradient(90% 55% at 50% -8%, rgba(255, 255, 255, 0.055), transparent 68%);
+
+    --seal-filter: none;
+    --theme-color: #0b0a08;
+
     --font-display: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
     --font-serif:   'EB Garamond', Georgia, 'Times New Roman', serif;
+}
+
+/* Edizione Mattina — black ink on warm newsprint */
+html[data-edition="mattina"] {
+    --bg:        #f0ebe0;
+    --ink:       #0b0a08;
+    --ink-soft:  #2c2820;
+    --muted:     #6e675a;
+    --accent:    #000000;
+
+    --tri-green: #1f7a4d;
+    --tri-white: #faf7f0;
+    --tri-red:   #b23b2f;
+    --tri-white-edge: rgba(11, 10, 8, 0.18);
+
+    --hair:         rgba(11, 10, 8, 0.12);
+    --hair-strong:  rgba(11, 10, 8, 0.32);
+    --hover-wash:   rgba(11, 10, 8, 0.04);
+    --focus-ring:   rgba(11, 10, 8, 0.28);
+
+    --grain-opacity: 0.045;
+    --grain-blend:   multiply;
+    --crown: radial-gradient(90% 55% at 50% -8%, rgba(255, 248, 230, 0.65), transparent 68%);
+
+    /* Seal art is light ink for Sera; invert to a dark stamp on paper */
+    --seal-filter: invert(1);
+
+    --theme-color: #f0ebe0;
 }
 
 /* ------------------------------------------------------------------ Reset */
@@ -52,6 +87,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    transition: background-color 0.45s ease, color 0.35s ease;
 }
 
 ::selection {
@@ -79,9 +115,10 @@ body::before {
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.06;
-    mix-blend-mode: screen;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: var(--grain-blend);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    transition: opacity 0.45s ease;
 }
 
 body::after {
@@ -90,7 +127,8 @@ body::after {
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: radial-gradient(90% 55% at 50% -8%, rgba(255, 255, 255, 0.055), transparent 68%);
+    background: var(--crown);
+    transition: opacity 0.45s ease;
 }
 
 /* ------------------------------------------------------------------ Skip link */
@@ -123,6 +161,8 @@ body::after {
     padding: clamp(3.25rem, 11vh, 6.5rem) clamp(1.5rem, 6vw, 2.75rem) clamp(2rem, 5vh, 3rem);
     display: flex;
     flex-direction: column;
+    container-type: inline-size;
+    container-name: page;
 }
 
 /* ------------------------------------------------------------------ Masthead */
@@ -133,11 +173,20 @@ body::after {
 .wordmark {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(2.35rem, 10.5vw, 4.6rem);
-    line-height: 1.06;
-    letter-spacing: 0.03em;
+    /* Single-line brand lockup (client request): scale to column, never wrap */
+    font-size: clamp(1.1rem, 8.1cqi, 2.5rem);
+    line-height: 1.05;
+    letter-spacing: 0.035em;
     text-transform: uppercase;
+    white-space: nowrap;
     color: var(--ink);
+}
+
+/* Fallback when container query units are unavailable */
+@supports not (font-size: 1cqi) {
+    .wordmark {
+        font-size: clamp(1.1rem, 5.2vw + 0.25rem, 2.5rem);
+    }
 }
 
 .payoff {
@@ -196,8 +245,89 @@ body::after {
 }
 
 .tri-green { background: var(--tri-green); }
-.tri-white { background: var(--tri-white); }
+.tri-white {
+    background: var(--tri-white);
+    box-shadow: inset 0 0 0 1px var(--tri-white-edge);
+}
 .tri-red   { background: var(--tri-red); }
+
+
+/* ------------------------------------------------------------------ Edition toggle (Mattina / Sera) */
+.edition-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin: 1.15rem auto 0;
+    padding: 0.45rem 0.95rem 0.5rem;
+    font-family: var(--font-serif);
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--hair);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.edition-toggle:hover,
+.edition-toggle:focus-visible {
+    color: var(--ink-soft);
+    border-color: var(--hair-strong);
+    background-color: var(--hover-wash);
+    outline: none;
+}
+
+.edition-toggle:focus-visible {
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.edition-kicker {
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.edition-name {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.edition-toggle:hover .edition-name,
+.edition-toggle:focus-visible .edition-name {
+    color: var(--ink);
+}
+
+/* Soften colour transitions for ink-bound elements */
+.wordmark,
+.payoff,
+.masthead-rule,
+.tagline,
+.link,
+.link-title,
+.link-kicker,
+.link-sub,
+.link-arrow,
+.colophon,
+.contact-kicker,
+.contact-btn,
+.contact-email,
+.credit a {
+    transition:
+        color 0.35s ease,
+        background-color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease,
+        opacity 0.3s ease;
+}
 
 /* ------------------------------------------------------------------ Links */
 .links {
@@ -220,13 +350,13 @@ body::after {
 
 .link:hover,
 .link:focus-visible {
-    background-color: rgba(243, 238, 227, 0.05);
+    background-color: var(--hover-wash);
     box-shadow: inset 3px 0 0 var(--accent);
     outline: none;
 }
 
 .link:focus-visible {
-    box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px rgba(243, 238, 227, 0.4);
+    box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px var(--focus-ring);
 }
 
 .link-text {
@@ -301,7 +431,11 @@ body::after {
     margin: 0 auto clamp(1.9rem, 5.5vw, 2.6rem);
     opacity: 0.92;
     transform: rotate(-4deg);
-    transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.3s ease;
+    filter: var(--seal-filter);
+    transition:
+        transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+        opacity 0.3s ease,
+        filter 0.45s ease;
 }
 
 /* Get in touch — Segreteria di Redazione */

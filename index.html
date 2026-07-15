@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-edition="sera">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prima Repubblica — L'Archivio Storico e Fotografico (1948–1994)</title>
     <meta name="description" content="Prima Repubblica — l'archivio storico e fotografico dell'Italia repubblicana, dal 1948 al 1994. Contro il logorio della politica moderna. I canali ufficiali: Instagram, Substack e la Bottega.">
-    <meta name="theme-color" content="#0b0a08">
+    <meta name="theme-color" content="#0b0a08" id="theme-color">
 
     <!-- Open Graph / social preview -->
     <meta property="og:type" content="website">
@@ -23,6 +23,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 
+    <!-- Apply saved edition before first paint (avoids a flash of the wrong palette) -->
+    <script>
+        (function () {
+            try {
+                var e = localStorage.getItem('pr-edizione');
+                if (e !== 'mattina' && e !== 'sera') e = 'sera';
+                document.documentElement.setAttribute('data-edition', e);
+                var m = document.querySelector('meta[name="theme-color"]');
+                if (m) m.setAttribute('content', e === 'mattina' ? '#f0ebe0' : '#0b0a08');
+            } catch (err) { /* private mode / blocked storage */ }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -44,6 +56,13 @@
                 <span class="rule-item rule-date">Roma, <span id="current-date">Mercoledì 15 Luglio 2026</span></span>
                 <span class="rule-item rule-side">L.&nbsp;500</span>
             </div>
+
+            <button type="button" class="edition-toggle" id="edition-toggle"
+                aria-pressed="true"
+                aria-label="Passa all'edizione del mattino">
+                <span class="edition-kicker">Bollettino</span>
+                <span class="edition-name" id="edition-name">Edizione Sera</span>
+            </button>
 
             <p class="tagline">« Immagini, fatti, personaggi ed eventi della Prima Repubblica italiana — dal 1948 al 1994. »</p>
 

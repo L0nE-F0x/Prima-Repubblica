@@ -1,0 +1,10 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Internal dev / handoff notes — kept out of the published repo
+CLAUDE.md
+
+# Logs & temp
+*.log

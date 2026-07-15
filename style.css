@@ -1,0 +1,321 @@
+/* =====================================================================
+   Prima Repubblica — Landing Page
+   Aesthetic: refined, editorial, print-authentic. Ivory paper,
+   Bodoni masthead, EB Garamond text, a whisper of grain. No clutter.
+   ===================================================================== */
+
+:root {
+    /* Paper & ink */
+    --paper:        #f4f0e6;   /* warm ivory newsprint            */
+    --paper-tint:   #efe9db;   /* faint recess                    */
+    --ink:          #1c1a15;   /* warm near-black                 */
+    --ink-soft:     #46413a;   /* softened ink for secondary text */
+    --muted:        #6f685a;   /* captions, meta                  */
+
+    /* Accents */
+    --accent:       #7c2b21;   /* oxblood — the single accent     */
+    --accent-warm:  #98362a;
+    --tri-green:    #1c5a3a;
+    --tri-red:      #8a2b22;
+    --tri-white:    #faf6ec;
+
+    /* Hairlines */
+    --hair:         rgba(28, 26, 21, 0.16);
+    --hair-strong:  rgba(28, 26, 21, 0.45);
+
+    /* Type */
+    --font-display: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, 'Times New Roman', serif;
+    --font-serif:   'EB Garamond', Georgia, 'Times New Roman', serif;
+}
+
+/* ------------------------------------------------------------------ Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100dvh;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--paper);
+}
+
+/* Paper grain + vignette overlays (self-contained, non-interactive) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(125% 100% at 50% 0%, transparent 55%, rgba(28, 26, 21, 0.06) 100%);
+}
+
+/* ------------------------------------------------------------------ Skip link */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 10;
+}
+
+.skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.6rem 1rem;
+    font-family: var(--font-serif);
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ Page shell */
+.page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 37rem;
+    min-height: 100dvh;
+    margin-inline: auto;
+    padding: clamp(3.25rem, 11vh, 6.5rem) clamp(1.5rem, 6vw, 2.75rem) clamp(2rem, 5vh, 3rem);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------------------------------------------------------------------ Masthead */
+.masthead {
+    text-align: center;
+}
+
+.eyebrow {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.72rem;
+    color: var(--accent);
+    margin-bottom: 1.15rem;
+    padding-left: 0.3em; /* optically re-centre trailing letter-spacing */
+}
+
+.wordmark {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(2.9rem, 12.5vw, 5.25rem);
+    line-height: 0.97;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+}
+
+.masthead-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.6rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--hair-strong);
+    border-bottom: 1px solid var(--hair-strong);
+    font-family: var(--font-serif);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.68rem;
+    color: var(--muted);
+}
+
+.rule-date {
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+
+.tagline {
+    max-width: 30rem;
+    margin: 1.65rem auto 0;
+    font-style: italic;
+    font-size: clamp(1.08rem, 3.4vw, 1.32rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    text-wrap: balance;
+}
+
+.tricolore {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: clamp(1.9rem, 5vw, 2.4rem);
+}
+
+.tricolore span {
+    width: 22px;
+    height: 3px;
+    border-radius: 1px;
+}
+
+.tri-green { background: var(--tri-green); }
+.tri-white { background: var(--tri-white); box-shadow: inset 0 0 0 1px var(--hair); }
+.tri-red   { background: var(--tri-red); }
+
+/* ------------------------------------------------------------------ Links */
+.links {
+    margin-top: clamp(2.5rem, 7vw, 3.5rem);
+    border-top: 1px solid var(--hair);
+}
+
+.link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 1.5rem clamp(0.5rem, 2.5vw, 1rem);
+    border-bottom: 1px solid var(--hair);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+    background-color: rgba(28, 26, 21, 0.04);
+    box-shadow: inset 3px 0 0 var(--accent);
+    outline: none;
+}
+
+.link:focus-visible {
+    box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px rgba(124, 43, 33, 0.35);
+}
+
+.link-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.32rem;
+    min-width: 0;
+}
+
+.link-kicker {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.68rem;
+    color: var(--accent);
+}
+
+.link-title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(1.35rem, 5.5vw, 1.7rem);
+    line-height: 1.12;
+    letter-spacing: -0.005em;
+    transition: color 0.2s ease;
+}
+
+.link:hover .link-title,
+.link:focus-visible .link-title {
+    color: var(--accent);
+}
+
+.link-sub {
+    font-family: var(--font-serif);
+    font-size: 0.94rem;
+    line-height: 1.35;
+    color: var(--muted);
+}
+
+.link-arrow {
+    flex: none;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--muted);
+    transition: transform 0.25s ease, color 0.2s ease;
+}
+
+.link:hover .link-arrow,
+.link:focus-visible .link-arrow {
+    transform: translateX(6px);
+    color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ Colophon */
+.colophon {
+    margin-top: auto;
+    padding-top: clamp(2.5rem, 8vw, 4rem);
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    line-height: 1.85;
+    color: var(--muted);
+}
+
+.colophon-mark {
+    display: block;
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin-bottom: 0.9rem;
+    opacity: 0.85;
+}
+
+.colophon strong {
+    color: var(--ink-soft);
+    font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ Responsive */
+@media (max-width: 480px) {
+    .masthead-rule {
+        gap: 0;
+        justify-content: center;
+    }
+    .rule-side {
+        display: none; /* keep only the dateline on small screens */
+    }
+    .link {
+        padding-inline: 0.25rem;
+        gap: 1rem;
+    }
+    .link-arrow {
+        font-size: 1.3rem;
+    }
+}
+
+/* ------------------------------------------------------------------ Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -1,7 +1,7 @@
 /* =====================================================================
    Prima Repubblica — Landing Page
    Aesthetic: stark editorial monochrome. Edizione Sera (off-white on near-black)
-   and Edizione Mattina (ink on newsprint). Cinzel + EB Garamond, film-grain.
+   and Edizione Mattina (ink on newsprint). Bodoni Moda masthead + EB Garamond, film-grain.
    "Contro il logorio della politica moderna."
    ===================================================================== */
 
@@ -32,7 +32,7 @@ html[data-edition="sera"] {
     --seal-filter: none;
     --theme-color: #0b0a08;
 
-    --font-display: 'Cinzel', 'Trajan Pro', 'Times New Roman', serif;
+    --font-display: 'Bodoni Moda', 'Didot', 'Bodoni MT', 'Times New Roman', serif;
     --font-serif:   'EB Garamond', Georgia, 'Times New Roman', serif;
 }
 
@@ -172,11 +172,15 @@ body::after {
 
 .wordmark {
     font-family: var(--font-display);
-    font-weight: 700;
-    /* Single-line brand lockup (client request): scale to column, never wrap */
-    font-size: clamp(1.1rem, 8.1cqi, 2.5rem);
-    line-height: 1.05;
-    letter-spacing: 0.035em;
+    /* Client sample: high-contrast Didone masthead (Bodoni/Didot family) */
+    font-weight: 400;
+    font-optical-sizing: auto;
+    /* Max optical size = thinnest hairlines + thickest stems, like the sample */
+    font-variation-settings: "opsz" 96;
+    /* Single-line brand lockup: scale to column, never wrap */
+    font-size: clamp(1.25rem, 8.6cqi, 2.85rem);
+    line-height: 0.98;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     white-space: nowrap;
     color: var(--ink);
@@ -190,14 +194,15 @@ body::after {
 }
 
 .payoff {
-    margin-top: 1.25rem;
+    margin-top: 1.15rem;
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(0.7rem, 2.3vw, 0.9rem);
-    letter-spacing: 0.22em;
+    font-optical-sizing: auto;
+    font-size: clamp(0.62rem, 2.0vw, 0.78rem);
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    padding-left: 0.22em; /* offset trailing letter-spacing */
+    padding-left: 0.28em; /* offset trailing letter-spacing */
 }
 
 .masthead-rule {
@@ -451,7 +456,7 @@ body::after {
 
 .contact-btn {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.13em;
     font-size: 0.78rem;

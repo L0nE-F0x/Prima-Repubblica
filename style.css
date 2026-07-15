@@ -568,3 +568,71 @@ body::after {
         animation: none !important;
     }
 }
+
+/* ------------------------------------------------------------------ Coming Soon (temporary Bottega page) */
+.page--coming-soon {
+    justify-content: flex-start;
+}
+
+.coming-soon {
+    margin-top: clamp(2.5rem, 8vw, 4rem);
+    padding: clamp(2rem, 6vw, 3rem) clamp(0.5rem, 2.5vw, 1rem);
+    border-top: 1px solid var(--hair-strong);
+    border-bottom: 1px solid var(--hair-strong);
+    text-align: center;
+}
+
+.coming-soon-kicker {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.68rem;
+    color: var(--muted);
+}
+
+.coming-soon-title {
+    margin-top: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 24;
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    -webkit-text-stroke: 0.35px currentColor;
+    paint-order: stroke fill;
+}
+
+.coming-soon-lead {
+    max-width: 26rem;
+    margin: 1.5rem auto 0;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    text-wrap: balance;
+}
+
+.coming-soon-note {
+    margin-top: 0.85rem;
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.coming-soon-back {
+    display: inline-block;
+    margin-top: clamp(2rem, 5vw, 2.75rem);
+    text-decoration: none;
+}
+
+.coming-soon-title,
+.coming-soon-kicker,
+.coming-soon-lead,
+.coming-soon-note {
+    transition: color 0.35s ease;
+}
